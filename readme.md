@@ -17,42 +17,28 @@ The code for the demos described below are included in this repository.
     Delta lake Demo with Azure Synapse
   </dt>
   <dd>
-    Delta Lake is an open-source storage layer that brings ACID (atomicity, consistency, isolation, and durability) transactions to Apache Spark and big data workloads
+    Delta Lake is an open-source storage layer that brings ACID (atomicity, consistency, isolation, and durability) transactions to Apache Spark and big data workloads.
   </dd>
   <dt>
     IoT Anomaly Detection leveraging Azure Synapse Link for Azure Cosmos DB
   </dt>
   <dd>
-    The hypothetical scenario is Power Plant where signals from steam turbines are being analyzed and Anomalous signals are detected. You will ingest streaming and batch IoT data into Azure Cosmos DB using Azure Synapse Spark, perform Joins and aggregations using Azure Synapse Link and perform anomaly detection using Azure Cognitive Services on Spark (MMLSpark).
+    The hypothetical scenario is Power Plant where signals from steam turbines are being analyzed and Anomalous signals are detected. Streaming and batch IoT data is ingested into Azure Cosmos DB using Azure Synapse Spark,  Joins and aggregations are done using Azure Synapse Link, and anomaly detection is performed with Azure Cognitive Services on Spark (MMLSpark).
   </dd>
    <dt>
      In-engine scoring with Synapse dedicated SQL pool
   </dt>
   <dd>
-    End-to-end demo to showcase Machine Learning enabled in Synapse SQL. Predict NYC Taxi Trip amount using machine learning model in ONYX format in SQL pool.
+    End-to-end demo to showcase Machine Learning enabled in Synapse SQL. NYC Taxi Trip amount is predected using machine learning model in ONYX format with SQL pool PREDICT.
   </dd>
    <dt>
      Streaming ingestion to Synapse dedicated SQL Pool
   </dt>
   <dd>
-    Azure Stream Analytics High throughput ingestion to dedicated SQL pool
+    Demonstrates Azure Stream Analytics High throughput ingestion to dedicated SQL pool.
   </dd>
   </dl>
 
-
-
-<li></li>
-<li></li>
-<li>Streaming ingestion to Synapse Dedicated Pool</li>
-<li>Predict NYC Taxi Tips using Onyx and SQL Pool scoring</li>
-<li>Predict NYC Taxi Tips using Spark ML and Azure Open Datasets</li>
-<li>Loop over each sql pool and:
- <ul>
-  <li>Check the state of the sql pool</li>
-  <li>Depending upon its status, Initiate the Pause or Restart</li>
- </ul>
-</li>
-</ol>
  
 This requires a simple pipeline in Synapse:
 ![](images/simplepipeline.jpg)
