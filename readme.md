@@ -29,13 +29,13 @@ The code for the demos described below are included in this repository.
      In-engine scoring with Synapse dedicated SQL pool
   </dt>
   <dd>
-    End-to-end demo to showcase Machine Learning enabled in Synapse SQL. NYC Taxi Trip amount is predected using machine learning model in ONYX format with SQL pool PREDICT.
+    End-to-end demo to showcase Machine Learning enabled in Synapse SQL. NYC Taxi Trip amount is predicted using a machine learning model in ONYX format with SQL pool PREDICT.
   </dd>
    <dt>
      Streaming ingestion to Synapse dedicated SQL Pool
   </dt>
   <dd>
-    Demonstrates Azure Stream Analytics High throughput ingestion to dedicated SQL pool.
+    Demonstrates Azure Stream Analytics high throughput ingestion to dedicated SQL pool.
   </dd>
   </dl>
 
