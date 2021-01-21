@@ -1,0 +1,313 @@
+{
+	"name": "RT Connect to Accounts",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"language_info": {
+				"name": "python"
+			}
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"spark.conf.set(\"fs.azure.account.auth.type.cseoedlprodadlsg2wus201.dfs.core.windows.net\", \"OAuth\")\r\n",
+					"spark.conf.set(\"fs.azure.account.oauth.provider.type.cseoedlprodadlsg2wus201.dfs.core.windows.net\", \"org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider\")\r\n",
+					"spark.conf.set(\"fs.azure.account.oauth2.client.id.cseoedlprodadlsg2wus201.dfs.core.windows.net\", \"28940566-7a33-4918-bbd2-f640149b3a5f\")\r\n",
+					"spark.conf.set(\"fs.azure.account.oauth2.client.secret.cseoedlprodadlsg2wus201.dfs.core.windows.net\", \"j1Rro7iSc4Ep_ie4_vn5-6Bjl~lrLK_T_v\")\r\n",
+					"spark.conf.set(\"fs.azure.account.oauth2.client.endpoint.cseoedlprodadlsg2wus201.dfs.core.windows.net\", \"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/token\")"
+				],
+				"attachments": null,
+				"execution_count": 15
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"pathtotable = \"abfss://cseo@cseoedlprodadlsg2wus201.dfs.core.windows.net/standardized/transactional/calcfy/calcfy_vw_fy_managedtopparentaccounts/v1/standard\"\r\n",
+					"df = spark.read.format('delta').load(pathtotable)\r\n",
+					"display(df)"
+				],
+				"attachments": null,
+				"execution_count": 2
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"from pyspark.sql.functions import col\r\n",
+					"\r\n",
+					"westAccounts = df.filter((col(\"SalesUnit\") == \"USA - West Enterprise\"))\r\n",
+					"# display(westAccounts)\r\n",
+					"print(westAccounts.count()) #339 accounts"
+				],
+				"attachments": null,
+				"execution_count": 3
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"westAccounts.createOrReplaceTempView('west_Accounts')"
+				],
+				"attachments": null,
+				"execution_count": 4
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "sparksql"
+					},
+					"collapsed": false
+				},
+				"source": [
+					"%%sql\r\n",
+					"SHOW DATABASES"
+				],
+				"attachments": null,
+				"execution_count": 5
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"pathtotable = \"abfss://cseo@cseoedlprodadlsg2wus201.dfs.core.windows.net/standardized/transactional/calcfy/calcfy_vw_fy_allassignments/v1/standard\"\r\n",
+					"df = spark.read.format('delta').load(pathtotable)\r\n",
+					"display(df)"
+				],
+				"attachments": null,
+				"execution_count": 6
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"westAssignments = df.join(westAccounts, df[\"MSSalesTPID\"] == westAccounts[\"MSSalesID\"],\"inner\")\r\n",
+					"display(westAssignments)"
+				],
+				"attachments": null,
+				"execution_count": 7
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"print(westAssignments.count()) #335,827 assignments"
+				],
+				"attachments": null,
+				"execution_count": 8
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"#westAssignments.createOrReplaceTempView('west_Assignments')"
+				],
+				"attachments": null,
+				"execution_count": 9
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": true
+				},
+				"source": [
+					"#westAccounts.write.mode(\"overwrite\").saveAsTable(\"west_Accounts\")\r\n",
+					"#westAssignments.write.mode(\"overwrite\").saveAsTable(\"west_Assignments\")"
+				],
+				"attachments": null,
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "sparksql"
+					},
+					"collapsed": true
+				},
+				"source": [
+					"%%sql\r\n",
+					"\r\n",
+					"CREATE TABLE assignments_external\r\n",
+					"    USING Parquet\r\n",
+					"    LOCATION \"abfss://cseo@cseoedlprodadlsg2wus201.dfs.core.windows.net/standardized/transactional/calcfy/calcfy_vw_fy_allassignments/v1/standard\"\r\n",
+					"      --\"abfss://cseo@cseoedlprodadlsg2wus201.dfs.core.windows.net/standardized/transactional/calcfy/calcfy_vw_fy_managedtopparentaccounts/v1/standard\""
+				],
+				"attachments": null,
+				"execution_count": 16
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "sparksql"
+					},
+					"collapsed": true
+				},
+				"source": [
+					"%%sql\r\n",
+					"-- Create a database scoped credential.\r\n",
+					"CREATE DATABASE SCOPED CREDENTIAL ADL_User\r\n",
+					"WITH\r\n",
+					"    IDENTITY = '28940566-7a33-4918-bbd2-f640149b3a5f@https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/token',\r\n",
+					"    SECRET = 'j1Rro7iSc4Ep_ie4_vn5-6Bjl~lrLK_T_v'"
+				],
+				"attachments": null,
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"microsoft": {
+						"language": "sparksql"
+					},
+					"collapsed": false
+				},
+				"source": [
+					"%%sql\r\n",
+					"SHOW TABLES"
+				],
+				"attachments": null,
+				"execution_count": 11
+			}
+		]
+	}
+}
