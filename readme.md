@@ -19,7 +19,70 @@ The code for the demos described below are included in this repository.
   <dd>Demonstrates Azure Stream Analytics high throughput ingestion to dedicated SQL pool.</dd>
 </dl>
 
+<h2>Setup</h2>
+<dl>Cold Path Analytical Pipeline with Azure Synapse Analytics
+  <dt>Scenario & Prerequisites</dt>
+  <dd>
+    <ul>
+      <li>Wide World Importer is a fictitious retail company building analytical platform with Azure Synapse Analytics. Their data is landed in ADLS Gen2 storage container for exploration and analysis purpose. In this demo, WWI will explore Synapse components to perform analysis on their sales data to gain insights.</li>
+      <li>Prerequisites</li>
+        <ul>
+            <li>ADLS Gen2 storage account</li>
+            <li>Storage Blob Data Contributor role on storage account</li>
+            <li>Azure Synapse Workspace</li>
+            <li>SQL Pool</li>
+            <li>Spark Pool</li>
+        </ul>
+      </li>
+    </ul>
+  </dd>
+  <dt>What to demo?
+    <dd>Azure Synapse Studio
+      <ul>
+        <li>Overview</li>
+        <li>Data, Develop, Orchestrate, Monitor and Manage Hub</li>
+        <li>Workspace native databases</li>
+        <li>inked services</li>
+      </ul>
+    </dd>
+    <dd>Knowledge Center and useful links
+      <ul>
+        <li>Sample open datasets</li>
+        <li>SQL scripts</li>
+        <li>Sample notebooks</li>
+      </ul>
+    </dd>  
+    <dd>Synapse demo
+      <ul>
+        <li>Data Load using Bulk Load Wizard</li>
+        <li>Advanced security features in Synapse SQL pool</li>
+        <li>Fast data exploration using SQL Serverless</li>
+        <li>Synapse notebook languages, magic commands</li>
+        <li>Metadata sync</li>
+        <li>Power BI integration</li>
+      </ul>
+    </dd>
+  </dt>
+  <dt>Why Synapse?
+  <dd>Single Service to
+    <ul>
+      <li>Ingest</li>
+      <li>Prepare</li>
+      <li>Transform Predict, & Enrich</li>
+      <li>Serve</li>
+    </ul>
+  <dd>
+  </dt>
+  </dl>
+    
+
+
+  
  
+
+  
+
+  
 This requires a simple pipeline in Synapse:
 ![](images/simplepipeline.jpg)
 
